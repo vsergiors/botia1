@@ -109,9 +109,9 @@ if (!message.channel.name.startsWith("ia-")) return
 try {
 
 const response = await axios.post(
-"https://api.deepseek.com/chat/completions",
+"https://openrouter.ai/api/v1/chat/completions",
 {
-model: "deepseek-chat",
+model: "deepseek/deepseek-chat",
 messages: [
 {
 role: "user",
@@ -122,7 +122,9 @@ content: message.content
 {
 headers: {
 Authorization: `Bearer ${API_KEY}`,
-"Content-Type": "application/json"
+"Content-Type": "application/json",
+"HTTP-Referer": "https://render.com",
+"X-Title": "Discord AI Bot"
 }
 }
 )
@@ -131,7 +133,9 @@ const reply = response.data.choices[0].message.content
 
 message.channel.send(reply)
 
-} catch {
+} catch (error) {
+
+console.log(error.response?.data || error.message)
 
 message.channel.send("❌ Error al conectar con la IA")
 

@@ -1,12 +1,13 @@
-const { 
-Client, 
-GatewayIntentBits, 
-ChannelType, 
-PermissionsBitField, 
-EmbedBuilder, 
-ButtonBuilder, 
-ButtonStyle, 
-ActionRowBuilder 
+const express = require("express")
+const {
+Client,
+GatewayIntentBits,
+ChannelType,
+PermissionsBitField,
+EmbedBuilder,
+ButtonBuilder,
+ButtonStyle,
+ActionRowBuilder
 } = require("discord.js")
 
 const axios = require("axios")
@@ -14,7 +15,20 @@ const axios = require("axios")
 // VARIABLES DE ENTORNO
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN
 const API_KEY = process.env.API_KEY
+const PORT = process.env.PORT || 3000
 
+// SERVIDOR WEB PARA RENDER
+const app = express()
+
+app.get("/", (req, res) => {
+res.send("Bot de Discord activo")
+})
+
+app.listen(PORT, () => {
+console.log(`Web service activo en puerto ${PORT}`)
+})
+
+// BOT DISCORD
 const client = new Client({
 intents: [
 GatewayIntentBits.Guilds,
